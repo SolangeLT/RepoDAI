@@ -93,6 +93,25 @@ h3, h4 {
     padding: 10px;
 }
 
+@media (max-width: 700px) {
+    .main {
+        background-color: #ffeaa7;
+    }
+}
+
+@media (max-width: 300px) {
+    .main {
+        background-color: #8d77da;
+    }
+}
+
+@media (max-width: 400px) {
+    .desaparecer {
+        display: none;
+    }
+}
+/*el desaparecer se le aplica a una de las imagenes, a la de nobel.jpg */
+
 
 
 
