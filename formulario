@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<form action="ejercicio" method="post">
+    <label for="fullname">Nombre:</label>
+    <input type="texto" id="fullname" name="Nombre" required autocomplete="name"/>
+    <label for="email">Email:</label>
+    <input type="email" name="Email"/>
+    <label for="password">Contraseña:</label>
+    <input type="password" name="contraseña"/>
+    <label for="carrera">Carrera:</label>
+    <select name="carrera">
+        <option value="0">Industrial</option>
+        <option value="1">Negocios</option>
+    </select>
+    <label for="comments">Comentarios:</label>
+    <textarea name="comments"></textarea>
+    <button>Enviar</button>
+
+</form>
