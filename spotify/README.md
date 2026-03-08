@@ -1,7 +1,7 @@
-# Session Storage vs Local Storage
+Session Storage vs Local Storage
 
-## ¿Qué es `sessionStorage`?
-`sessionStorage` es una forma de almacenamiento del navegador que permite guardar pares **clave-valor** para una sola sesión de la página. Pertenece a la Web Storage API y funciona de forma parecida a `localStorage`, pero con una diferencia clave: **sus datos duran solo mientras la pestaña o ventana actual siga abierta**. Si se cierra la pestaña, la información se elimina. Además, `sessionStorage` se separa por **origen** y también por **pestaña**. citeturn0search0turn0search8
+¿Qué es sessionStorage?
+sessionStorage es una forma de almacenamiento del navegador que permite guardar pares clave-valor para una sola sesión de la página. Pertenece a la Web Storage API y funciona de forma parecida a localStorage, pero con una diferencia: sus datos duran solo mientras la pestaña o ventana actual siga abierta. Si se cierra la pestaña, la información se elimina. Además, sessionStorage se separa por origen y también por pestaña. citeturn0search0turn0search8
 
 ## Métodos principales de `sessionStorage`
 Tanto `sessionStorage` como `localStorage` usan la interfaz `Storage`, por lo que comparten los mismos métodos principales: `setItem()`, `getItem()`, `removeItem()`, `clear()`, `key()` y la propiedad `length`. citeturn0search8turn0search11
