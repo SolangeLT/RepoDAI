@@ -154,7 +154,7 @@
       const savedToken = sessionStorage.getItem('spotifyToken');
 
       if (!savedToken) {
-        showAlert('No se encontró un token en sessionStorage. Guarda un token antes de consultar un track.');
+        showAlert('No se encontró un token en sessionStorage. Guarda un token antes de consultar una canción.');
         return;
       }
 
@@ -176,7 +176,7 @@
         renderTrackInfo(data);
       } catch (error) {
         resultContainer.className = 'text-muted';
-        resultContainer.innerHTML = 'Aquí aparecerá la información del track seleccionado.';
+        resultContainer.innerHTML = 'Aquí aparecerá la información de la canción seleccionada.';
         showAlert('Hubo un error al consultar la API de Spotify. Revisa tu token e inténtalo de nuevo.');
         console.error(error);
       }
@@ -200,7 +200,7 @@
 
       if (!trackId) {
         resultContainer.className = 'text-muted';
-        resultContainer.innerHTML = 'Aquí aparecerá la información del track seleccionado.';
+        resultContainer.innerHTML = 'Aquí aparecerá la información de la canción seleccionada.';
         return;
       }
 
@@ -212,7 +212,7 @@
       tokenInput.value = '';
       trackSelect.value = '';
       resultContainer.className = 'text-muted';
-      resultContainer.innerHTML = 'Aquí aparecerá la información del track seleccionado.';
+      resultContainer.innerHTML = 'Aquí aparecerá la información de la canción seleccionada.';
       sessionStorage.removeItem('spotifyToken');
     });
   </script>
