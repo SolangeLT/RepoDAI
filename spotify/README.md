@@ -29,13 +29,14 @@ Saber cuántos elementos hay guardados
 
 console.log(sessionStorage.length);
 
----
 
-## Guardar JSON en `sessionStorage`
-Como Web Storage guarda **texto**, para almacenar objetos o arreglos se usa `JSON.stringify()` al guardar y `JSON.parse()` al recuperar. citeturn0search11turn0search8
 
-### Guardar un objeto JSON
-```js
+Guardar JSON en sessionStorage
+
+Como Web Storage guarda texto, para almacenar objetos o arreglos se usa JSON.stringify() al guardar y JSON.parse() al recuperar.
+
+Guardar un objeto JSON
+
 const usuario = {
   nombre: "Iñaki",
   rol: "estudiante",
@@ -43,27 +44,24 @@ const usuario = {
 };
 
 sessionStorage.setItem("usuario", JSON.stringify(usuario));
-```
 
-### Recuperar un objeto JSON
-```js
+Recuperar un objeto JSON
+
 const usuarioGuardado = JSON.parse(sessionStorage.getItem("usuario"));
 console.log(usuarioGuardado.nombre);
-```
 
-### Guardar un arreglo JSON
-```js
+Guardar un arreglo JSON
+
 const tracks = ["deja vu", "me rehúso", "baile inolvidable"];
 sessionStorage.setItem("tracks", JSON.stringify(tracks));
-```
 
-### Recuperar un arreglo JSON
-```js
+Recuperar un arreglo JSON
+
 const tracksGuardados = JSON.parse(sessionStorage.getItem("tracks"));
 console.log(tracksGuardados);
-```
 
----
+
+
 
 ## Diferencias entre `localStorage` y `sessionStorage`
 
