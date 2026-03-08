@@ -63,43 +63,38 @@ console.log(tracksGuardados);
 
 
 
-## Diferencias entre `localStorage` y `sessionStorage`
+Diferencias entre localStorage y sessionStorage
 
-| Aspecto | `localStorage` | `sessionStorage` |
-|---|---|---|
-| Duración de los datos | Persiste entre sesiones del navegador | Solo dura durante la sesión de la pestaña |
-| Alcance | Se comparte por origen | Se separa por origen **y** por pestaña |
-| Uso típico | Preferencias, temas, datos que deban seguir después | Tokens temporales, formularios en progreso, estado momentáneo |
-| Se borra al cerrar pestaña | No necesariamente | Sí |
+localStorage:
 
-MDN indica que `localStorage` guarda datos entre sesiones del navegador, mientras que `sessionStorage` conserva datos únicamente durante la sesión de la página actual. citeturn0search1turn0search0
+Guarda la información de forma persistente.
 
----
+Los datos no se eliminan al cerrar el navegador.
 
-## Similitudes entre `localStorage` y `sessionStorage`
-- Ambos forman parte de la **Web Storage API**. citeturn0search11turn0search8
-- Ambos almacenan datos en formato **clave-valor**. citeturn0search11turn0search8
-- Ambos guardan la información como **strings**. Si quieres guardar objetos, debes convertirlos con `JSON.stringify()`. citeturn0search11
-- Ambos usan la misma interfaz `Storage`, por eso comparten métodos como `setItem()` y `getItem()`. citeturn0search8
+La información se mantiene incluso si el usuario vuelve a abrir el navegador otro día.
 
----
+Puede ser compartido entre todas las pestañas del mismo sitio web.
 
-## Ejemplo comparativo
-```js
-// localStorage: persiste aunque cierres el navegador
-localStorage.setItem("tema", "oscuro");
+sessionStorage:
 
-// sessionStorage: vive mientras la pestaña siga abierta
-sessionStorage.setItem("token", "abc123");
-```
+Guarda la información solo durante la sesión actual.
 
----
+Los datos se eliminan cuando se cierra la pestaña o el navegador.
 
-## Conclusión
-`sessionStorage` sirve cuando necesitas guardar datos de forma **temporal** y asociados a una sola pestaña, por ejemplo un token de acceso usado en una práctica o el estado momentáneo de una vista. En cambio, `localStorage` conviene más cuando quieres que los datos permanezcan disponibles incluso después de cerrar el navegador, como configuraciones o preferencias del usuario. citeturn0search0turn0search1
+Cada pestaña del navegador tiene su propio sessionStorage independiente.
 
----
+Es útil para guardar datos temporales como tokens o información de navegación.
 
-## Fuentes
-- MDN: `sessionStorage` y Web Storage API. citeturn0search0turn0search11turn0search8
-- MDN: `localStorage`. citeturn0search1
+En resumen, localStorage se usa cuando queremos guardar datos por más tiempo, mientras que sessionStorage es mejor para información temporal que solo debe existir mientras la pestaña esté abierta.
+
+
+Similitudes entre localStorage y sessionStorage
+- Ambos forman parte de la Web Storage API.
+- Ambos almacenan datos en formato clave-valor. 
+- Ambos guardan la información como strings. Si quieres guardar objetos, debes convertirlos con JSON.stringify(). 
+- Ambos usan la misma interfaz Storage, por eso comparten métodos como setItem() y getItem().
+
+
+
+
+
