@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>seleccion-artistas</title>
+  <title>Práctica Spotify</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
   <div class="container mt-4">
-    <h1 class="mb-4">Consulta de canciones</h1>
+    <h1>Práctica Spotify</h1>
 
-    <div id="alerta"></div>
+    <div id="alerta" class="mt-3"></div>
 
-    <div class="mb-4">
-      <label for="tokenInput" class="form-label">Token de Spotify</label>
-      <input type="text" id="tokenInput" class="form-control" placeholder="Pega aquí tu token">
-      <button id="guardarTokenBtn" class="btn btn-primary mt-2">Guardar token</button>
+    <div class="mt-3">
+      <label for="tokenInput" class="form-label">Token</label>
+      <input type="text" id="tokenInput" class="form-control">
+      <button id="guardarBtn" class="btn btn-primary mt-2">Guardar</button>
     </div>
 
-    <div class="mb-4">
-      <label for="trackSelect" class="form-label">Selecciona una canción</label>
+    <div class="mt-4">
+      <label for="trackSelect" class="form-label">Canción</label>
       <select id="trackSelect" class="form-select">
         <option value="">Selecciona una canción</option>
         <option value="6HU7h9RYOaPRFeh0R3UeAr">deja vu</option>
@@ -30,32 +29,31 @@
       </select>
     </div>
 
-    <div class="mb-4">
-      <button id="limpiarBtn" class="btn btn-secondary">Limpiar página</button>
+    <div class="mt-4">
+      <button id="limpiarBtn" class="btn btn-secondary">Limpiar</button>
     </div>
 
-    <div id="resultado" class="border p-3"></div>
+    <div id="resultado" class="mt-4"></div>
   </div>
 
   <script>
     const tokenInput = document.getElementById("tokenInput");
-    const guardarTokenBtn = document.getElementById("guardarTokenBtn");
+    const guardarBtn = document.getElementById("guardarBtn");
     const trackSelect = document.getElementById("trackSelect");
+    const limpiarBtn = document.getElementById("limpiarBtn");
     const resultado = document.getElementById("resultado");
     const alerta = document.getElementById("alerta");
-    const limpiarBtn = document.getElementById("limpiarBtn");
 
-    guardarTokenBtn.addEventListener("click", function () {
+    guardarBtn.addEventListener("click", function () {
       const token = tokenInput.value.trim();
 
       if (token === "") {
-        mostrarError("Debes escribir un token antes de guardarlo.");
+        mostrarError("Escribe un token.");
         return;
       }
 
       sessionStorage.setItem("spotifyToken", token);
-      alerta.innerHTML = '<div class="alert alert-success">Token guardado en sessionStorage.</div>';
-      tokenInput.value = "";
+      alerta.innerHTML = '<div class="alert alert-success">Token guardado.</div>';
     });
 
     trackSelect.addEventListener("change", function () {
@@ -66,33 +64,44 @@
         return;
       }
 
-      const tokenGuardado = sessionStorage.getItem("spotifyToken");
+      const token = sessionStorage.getItem("spotifyToken");
 
-      if (!tokenGuardado) {
-        mostrarError("No hay token guardado en sessionStorage.");
+      if (!token) {
+        mostrarError("No hay token guardado.");
         return;
       }
-
-      const tokenCompleto = "Bearer " + tokenGuardado;
 
       fetch("https://api.spotify.com/v1/tracks/" + trackId, {
         method: "GET",
         headers: {
-          Authorization: tokenCompleto
+          Authorization: "Bearer " + token
         }
       })
       .then(function (response) {
         if (!response.ok) {
-          throw new Error("Error en la llamada a la API");
+          throw new Error("Error");
         }
         return response.json();
       })
       .then(function (data) {
-        mostrarTrack(data);
+        let artistas = "";
+
+        for (let i = 0; i < data.artists.length; i++) {
+          artistas += "<p><strong>Artista:</strong> " + data.artists[i].name + "</p>";
+          artistas += '<p><a href="' + data.artists[i].external_urls.spotify + '" target="_blank">' + data.artists[i].external_urls.spotify + "</a></p>";
+        }
+
+        resultado.innerHTML =
+          "<h3>Resultado</h3>" +
+          "<p><strong>Tipo de álbum:</strong> " + data.album.album_type + "</p>" +
+          "<p><strong>Total de canciones:</strong> " + data.album.total_tracks + "</p>" +
+          "<p><strong>Nombre del álbum:</strong> " + data.album.name + "</p>" +
+          artistas;
+
         alerta.innerHTML = "";
       })
       .catch(function () {
-        mostrarError("Hubo un error al consultar la API de Spotify.");
+        mostrarError("Hubo un error al consultar la API.");
       });
     });
 
@@ -103,45 +112,9 @@
       alerta.innerHTML = "";
     });
 
-    function mostrarTrack(track) {
-      let artistasHtml = "";
-
-      for (let i = 0; i < track.artists.length; i++) {
-        artistasHtml += construirArtista(track.artists[i]);
-      }
-
-      resultado.innerHTML = `
-        <h3>Resultado del track</h3>
-        <p><strong>Tipo de álbum:</strong> ${track.album.album_type}</p>
-        <p><strong>Total de canciones del álbum:</strong> ${track.album.total_tracks}</p>
-        <p><strong>Nombre del álbum:</strong> ${track.album.name}</p>
-        <p><strong>Artistas:</strong></p>
-        ${artistasHtml}
-      `;
-    }
-
-    function construirArtista(artista) {
-      return `
-        <div class="mb-2">
-          <p class="mb-1"><strong>Nombre:</strong> ${artista.name}</p>
-          <p class="mb-1">
-            <strong>Spotify:</strong>
-            <a href="${artista.external_urls.spotify}" target="_blank">
-              ${artista.external_urls.spotify}
-            </a>
-          </p>
-        </div>
-      `;
-    }
-
     function mostrarError(mensaje) {
-      alerta.innerHTML = `
-        <div class="alert alert-danger" role="alert">
-          ${mensaje}
-        </div>
-      `;
+      alerta.innerHTML = '<div class="alert alert-danger" role="alert">' + mensaje + "</div>";
     }
   </script>
-
 </body>
 </html>
