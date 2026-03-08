@@ -67,23 +67,23 @@ Diferencias entre localStorage y sessionStorage
 
 localStorage:
 
-Guarda la información de forma persistente.
+- Guarda la información de forma persistente.
 
-Los datos no se eliminan al cerrar el navegador.
+- Los datos no se eliminan al cerrar el navegador.
 
-La información se mantiene incluso si el usuario vuelve a abrir el navegador otro día.
+- La información se mantiene incluso si el usuario vuelve a abrir el navegador otro día.
 
-Puede ser compartido entre todas las pestañas del mismo sitio web.
+- Puede ser compartido entre todas las pestañas del mismo sitio web.
 
 sessionStorage:
 
-Guarda la información solo durante la sesión actual.
+- Guarda la información solo durante la sesión actual.
 
-Los datos se eliminan cuando se cierra la pestaña o el navegador.
+- Los datos se eliminan cuando se cierra la pestaña o el navegador.
 
-Cada pestaña del navegador tiene su propio sessionStorage independiente.
+- Cada pestaña del navegador tiene su propio sessionStorage independiente.
 
-Es útil para guardar datos temporales como tokens o información de navegación.
+- Es útil para guardar datos temporales como tokens o información de navegación.
 
 En resumen, localStorage se usa cuando queremos guardar datos por más tiempo, mientras que sessionStorage es mejor para información temporal que solo debe existir mientras la pestaña esté abierta.
 
