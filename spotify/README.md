@@ -6,7 +6,7 @@ sessionStorage es una forma de almacenamiento del navegador que permite guardar 
 Métodos principales de sessionStorage
 Tanto sessionStorage como localStorage usan la interfaz Storage como su nombre lo dice, por lo que comparten los mismos métodos principales: setItem(), getItem(), removeItem(), clear(), key() y la propiedad length.
 
-### Guardar un dato simple
+Guardar un dato simple
 ```js
 sessionStorage.setItem("token", "abc123");
 ```
