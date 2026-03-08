@@ -12,27 +12,22 @@ Guardar un dato simple
 
 sessionStorage.setItem("token", "abc123");
 
+Recuperar un dato simple
 
-### Recuperar un dato simple
-```js
 const token = sessionStorage.getItem("token");
 console.log(token);
-```
 
-### Eliminar un dato
-```js
+Eliminar un dato
+
 sessionStorage.removeItem("token");
-```
 
-### Limpiar todo el sessionStorage
-```js
+Limpiar todo el sessionStorage
+
 sessionStorage.clear();
-```
 
-### Saber cuántos elementos hay guardados
-```js
+Saber cuántos elementos hay guardados
+
 console.log(sessionStorage.length);
-```
 
 ---
 
