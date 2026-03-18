@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarea Spotify</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-4">
+    <h1>Tarea Spotify</h1>
+
+    <div id="alerta" class="mt-3"></div>
+
+    <div class="mt-3">
+      <label for="tokenInput" class="form-label">Token</label>
+      <input type="text" id="tokenInput" class="form-control">
+      <button id="guardarBtn" class="btn btn-primary mt-2">Guardar</button>
+    </div>
+
+    <div class="mt-4">
+      <label for="trackSelect" class="form-label">Canción</label>
+      <select id="trackSelect" class="form-select">
+        <option value="">Selecciona una canción</option>
+        <option value="6HU7h9RYOaPRFeh0R3UeAr">deja vu</option>
+        <option value="6De0lHrwBfPfrhorm9q1Xl">me reúso</option>
+        <option value="2lTm559tuIvatlT1u0JYG2">baile inolvidable</option>
+        <option value="0qaWEvPkts34WF68r8Dzx9">bailarina</option>
+      </select>
+    </div>
+
+    <div class="mt-4">
+      <button id="limpiarBtn" class="btn btn-secondary">Limpiar</button>
+    </div>
+
+    <div id="resultado" class="mt-4"></div>
+  </div>
+
+  <script>
+    const tokenInput = document.getElementById("tokenInput");
+    const guardarBtn = document.getElementById("guardarBtn");
+    const trackSelect = document.getElementById("trackSelect");
+    const limpiarBtn = document.getElementById("limpiarBtn");
+    const resultado = document.getElementById("resultado");
+    const alerta = document.getElementById("alerta");
+
+    guardarBtn.addEventListener("click", function () {
+      const token = tokenInput.value.trim();
+
+      if (token === "") {
+        mostrarError("Escribe un token.");
+        return;
+      }
+
+      sessionStorage.setItem("spotifyToken", token);
+      alerta.innerHTML = '<div class="alert alert-success">Token guardado.</div>';
+    });
+
+    trackSelect.addEventListener("change", function () {
+      const trackId = trackSelect.value;
+
+      if (trackId === "") {
+        resultado.innerHTML = "";
+        return;
+      }
+
+      const token = sessionStorage.getItem("spotifyToken");
+
+      if (!token) {
+        mostrarError("No hay token guardado.");
+        return;
+      }
+
+      fetch("https://api.spotify.com/v1/tracks/" + trackId, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Error");
+        }
+        return response.json();
+      })
+      .then(function (data) {
+        let artistas = "";
+
+        for (let i = 0; i < data.artists.length; i++) {
+          artistas += "<p><strong>Artista:</strong> " + data.artists[i].name + "</p>";
+          artistas += '<p><a href="' + data.artists[i].external_urls.spotify + '" target="_blank">' + data.artists[i].external_urls.spotify + "</a></p>";
+        }
+
+        resultado.innerHTML =
+          "<h3>Resultado</h3>" +
+          "<p><strong>Tipo de álbum:</strong> " + data.album.album_type + "</p>" +
+          "<p><strong>Total de canciones:</strong> " + data.album.total_tracks + "</p>" +
+          "<p><strong>Nombre del álbum:</strong> " + data.album.name + "</p>" +
+          artistas;
+
+        alerta.innerHTML = "";
+      })
+      .catch(function () {
+        mostrarError("Hubo un error al consultar la API.");
+      });
+    });
+
+    limpiarBtn.addEventListener("click", function () {
+      tokenInput.value = "";
+      trackSelect.value = "";
+      resultado.innerHTML = "";
+      alerta.innerHTML = "";
+    });
+
+    function mostrarError(mensaje) {
+      alerta.innerHTML = '<div class="alert alert-danger" role="alert">' + mensaje + "</div>";
+    }
+  </script>
+</body>
+</html>
