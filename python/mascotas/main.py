@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseModel, Field
+from uuid import uuid4, UUID
 
 app = FastAPI()
 origins = ["*"] # Lista de orígenes permitidos para CORS, en este caso se permite cualquier origen. En un entorno de producción, es indispensable especificar los orígenes permitidos para mejorar la seguridad.
