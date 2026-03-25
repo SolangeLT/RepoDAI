@@ -53,3 +53,49 @@ VALUES ('Gabriel', '1991-09-21', 0, 'Morelos', 'Clásica', FALSE);
 
 INSERT INTO Persona (nombre, fecha_nacimiento, total_hermanos, estado, musica_favorita, soltero)
 VALUES ('Valeria', '1998-04-03', 1, 'CDMX', 'Rock', TRUE);
+
+
+select * from Persona;
+
+SELECT estado, musica_favorita FROM Persona;
+
+SELECT COUNT(DISTINCT estado) AS numero_estados_dif FROM Persona;
+SELECT DISTINCT musica_favorita FROM Persona;
+
+SELECT sum(total_hermanos) FROM Persona;
+
+SELECT 
+  SUM(total_hermanos) AS suma_hermanos, 
+  AVG(total_hermanos) AS hermanos_promedio,
+  MAX(total_hermanos) AS maximo_hermanos,
+  MIN(total_hermanos) AS minimo_hermanos
+FROM Persona;
+
+SELECT 
+	nombre, 
+    total_hermanos 
+FROM Persona 
+WHERE total_hermanos =0;
+
+SELECT 
+	nombre, 
+    total_hermanos 
+FROM Persona 
+WHERE total_hermanos <>0;
+
+SELECT 
+	nombre, 
+    total_hermanos 
+FROM Persona 
+WHERE total_hermanos >2;
+
+SELECT  
+    COUNT(total_hermanos)
+FROM Persona 
+WHERE total_hermanos >2;
+
+SELECT 
+	nombre, 
+    total_hermanos 
+FROM Persona 
+WHERE total_hermanos BETWEEN 1 AND 2;
