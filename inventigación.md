@@ -12,7 +12,7 @@ Se usan para:
 ### Ejemplo
 Si en una app bancaria se descuenta dinero de una cuenta y luego se abona a otra, ambas operaciones deberían ir en la misma transacción. Si una falla, se hace `ROLLBACK` y ninguna queda aplicada.
 
-```sql
+sql:
 BEGIN;
 UPDATE cuentas SET saldo = saldo - 100 WHERE id = 1;
 UPDATE cuentas SET saldo = saldo + 100 WHERE id = 2;
