@@ -1,0 +1,19 @@
+# 1) ¿Qué es una transacción? ¿Para qué se usan?
+
+Una **transacción** es un conjunto de operaciones sobre la base de datos que se tratan como una sola unidad de trabajo. En SQLite, una transacción normalmente comienza con `BEGIN` y termina con `COMMIT` si todo sale bien, o con `ROLLBACK` si hay que deshacer los cambios. Esto evita que la base quede “a medias” cuando ocurre un error. 
+## ¿Para qué se usan?
+Se usan para:
+
+- **Mantener la integridad de los datos**.
+- **Evitar cambios parciales** si una operación falla.
+- **Agrupar varias instrucciones** que deben ejecutarse juntas.
+- **Controlar mejor la concurrencia** cuando varios procesos acceden a la base. :contentReference[oaicite:1]{index=1}
+
+### Ejemplo
+Si en una app bancaria se descuenta dinero de una cuenta y luego se abona a otra, ambas operaciones deberían ir en la misma transacción. Si una falla, se hace `ROLLBACK` y ninguna queda aplicada.
+
+```sql
+BEGIN;
+UPDATE cuentas SET saldo = saldo - 100 WHERE id = 1;
+UPDATE cuentas SET saldo = saldo + 100 WHERE id = 2;
+COMMIT;
