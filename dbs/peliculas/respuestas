@@ -1,0 +1,132 @@
+# CONSULTAS SQL - BASE DE DATOS PELÍCULAS
+
+1. Total de usuarios por país
+- Mostrar el nombre del país y el total de usuarios como número.
+
+SELECT 
+    p.nombre AS pais,
+    COUNT(u.id) AS total_usuarios
+FROM Paises p
+LEFT JOIN Usuarios u
+    ON p.id = u.pais_id
+GROUP BY p.id, p.nombre;
+
+
+2. Número de actores registrados por película
+- Mostrar el nombre de la película y el total de actores.
+
+SELECT 
+    p.titulo AS pelicula,
+    COUNT(pa.actor_id) AS total_actores
+FROM Peliculas p
+LEFT JOIN PeliculaActor pa
+    ON p.id = pa.pelicula_id
+GROUP BY p.id, p.titulo;
+
+
+3. Mostrar las películas en las que haya dos o más actores
+- Mostrar únicamente el nombre de la película.
+
+SELECT 
+    p.titulo AS pelicula
+FROM Peliculas p
+JOIN PeliculaActor pa
+    ON p.id = pa.pelicula_id
+GROUP BY p.id, p.titulo
+HAVING COUNT(pa.actor_id) >= 2;
+
+
+4. Total de usuarios registrados por año
+- Mostrar el año a cuatro dígitos YYYY y el total de usuarios.
+
+SELECT 
+    strftime('%Y', fecha_registro) AS anio,
+    COUNT(*) AS total_usuarios
+FROM Usuarios
+GROUP BY strftime('%Y', fecha_registro)
+ORDER BY anio;
+
+
+5. Total de usuarios registrados por país y por año
+- Mostrar el país, el año y el total de personas registradas en ese país y en ese año.
+
+SELECT 
+    p.nombre AS pais,
+    strftime('%Y', u.fecha_registro) AS anio,
+    COUNT(u.id) AS total_usuarios
+FROM Usuarios u
+JOIN Paises p
+    ON u.pais_id = p.id
+GROUP BY p.nombre, strftime('%Y', u.fecha_registro)
+ORDER BY p.nombre, anio;
+
+
+6. Películas por actor
+- Mostrar el nombre del actor y el nombre de la película.
+
+SELECT 
+    a.nombre AS actor,
+    p.titulo AS pelicula
+FROM Actores a
+JOIN PeliculaActor pa
+    ON a.id = pa.actor_id
+JOIN Peliculas p
+    ON pa.pelicula_id = p.id
+ORDER BY a.nombre, p.titulo;
+
+
+7. Actores que aparecen en la película "Los Juegos del Hambre"
+- Debe filtrarse por el texto "Los Juegos del Hambre".
+
+SELECT 
+    a.nombre AS actor,
+    p.titulo AS pelicula
+FROM Actores a
+JOIN PeliculaActor pa
+    ON a.id = pa.actor_id
+JOIN Peliculas p
+    ON pa.pelicula_id = p.id
+WHERE p.titulo = 'Los Juegos del Hambre';
+
+
+8. ¿Cuántos minutos ha empleado cada usuario en ver las películas?
+- Mostrar el nombre del usuario y la cantidad de minutos acumulada entre todas las películas.
+
+SELECT 
+    u.nombre AS usuario,
+    COALESCE(SUM(r.minutos_vistos), 0) AS minutos_totales
+FROM Usuarios u
+LEFT JOIN Reproducciones r
+    ON u.id = r.usuario_id
+GROUP BY u.id, u.nombre
+ORDER BY minutos_totales DESC;
+
+
+9. Películas que no hayan tenido reproducciones
+
+SELECT 
+    p.titulo AS pelicula
+FROM Peliculas p
+LEFT JOIN Reproducciones r
+    ON p.id = r.pelicula_id
+WHERE r.id IS NULL;
+
+Reto:
+10. Actores de las películas que hayan sido vistas por usuarios de España
+
+SELECT DISTINCT
+    a.nombre AS actor,
+    p.titulo AS pelicula
+FROM Usuarios u
+JOIN Paises pa
+    ON u.pais_id = pa.id
+JOIN Reproducciones r
+    ON u.id = r.usuario_id
+JOIN Peliculas p
+    ON r.pelicula_id = p.id
+JOIN PeliculaActor pac
+    ON p.id = pac.pelicula_id
+JOIN Actores a
+    ON pac.actor_id = a.id
+WHERE pa.nombre = 'España'
+ORDER BY a.nombre;
